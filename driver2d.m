@@ -1,9 +1,9 @@
-% This is the driver for the rOMT algorithm
+% This is the driver for the rOMT algorithm for 2D data
 % parameters of rOMT is defined in getPamams.m
 
 addpath('utilities', 'Sensitivities','Inverse');
 
-tag = 'MCA_S1';%'gaussian3';
+tag = 'gaussian3';
 
 %%
 % get parameters and set directories
