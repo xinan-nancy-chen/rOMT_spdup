@@ -99,7 +99,7 @@ for tind = 1:length(dpar.first_time:dpar.time_jump:dpar.last_time)
     
     % initial guess for u:
     if tind == 1 || reInitializeU
-    u = zeros(2*prod(par.n),par.nt);%zeros(2*prod(par.n),par.nt);
+    u = ones(2*prod(par.n),par.nt);%zeros(2*prod(par.n),par.nt);
     end
     
     %% Descent for u
