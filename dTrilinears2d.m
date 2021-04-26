@@ -15,6 +15,7 @@ if nargin < 6
 end
 
 [m,n] = size(x);
+N = m*n;
 
 % Convert x and y to the coordinate system 1:m, 1:n
 x = x./hx; y = y./hy;
@@ -46,7 +47,7 @@ jki     =  xd(ind1) + (yd(ind1)-1)*m;
 j1ki    =  xd(ind2) + 1+ (yd(ind2)-1)*m;
 jk1i    =  xd(ind3) + yd(ind3)*m;
 j1k1i   =  xd(ind4) + 1 + yd(ind4)*m;
-
+%{
 ii = [ind1;ind2;ind3;ind4];
 jj = [jki; j1ki;   jk1i; j1k1i];
 
@@ -54,8 +55,14 @@ ss = [(1-xp(ind1)).*(1-yp(ind1));...
     (xp(ind2)).*(1-yp(ind2));...
     (1-xp(ind3)).*(yp(ind3));...
     (xp(ind4)).*(yp(ind4))];
+P = sparse(jj,ii,ss,N,N);
+%}
+A1 = sparse(jki,ind1,(1-xp(ind1)).*(1-yp(ind1)),N,N);
+A2 = sparse(j1ki,ind2,(xp(ind2)).*(1-yp(ind2)),N,N);
+A3 = sparse(jk1i,ind3,(1-xp(ind3)).*(yp(ind3)),N,N);
+A4 = sparse(j1k1i,ind4,(xp(ind4)).*(yp(ind4)),N,N);
+P = A1 + A2 + A3 + A4;
 %%
-P = sparse(jj,ii,ss,n*m,n*m);
 if nargout > 1
     
     %% Derivatives
@@ -75,29 +82,29 @@ if nargout > 1
         (-1)*(yp(ind3));...
         yp(ind4)];
     %
-    Mx = sparse(jj,ii,dx,n*m,n*m);
+    Mx = sparse(jj,ii,dx,N,N);
     Txx = Mx*sdiag(T(:));
     %y
     dy = [(1-xp(ind1)).*(-1);...
         (xp(ind2)).*(-1);...
         1-xp(ind3);...
         xp(ind4)];
-    My = sparse(jj,ii,dy,n*m,n*m);
+    My = sparse(jj,ii,dy,N,N);
     Tyy = My*sdiag(T(:));
     %}
     %%
     % old version
     
-    A1 = sparse(jki,ind1,T(ind1),n*m,n*m);
-    A2 = sparse(j1ki,ind2,T(ind2),n*m,n*m);
-    A3 = sparse(jk1i,ind3,T(ind3),n*m,n*m);
-    A4 = sparse(j1k1i,ind4,T(ind4),n*m,n*m);
+    A1 = sparse(jki,ind1,T(ind1),N,N);
+    A2 = sparse(j1ki,ind2,T(ind2),N,N);
+    A3 = sparse(jk1i,ind3,T(ind3),N,N);
+    A4 = sparse(j1k1i,ind4,T(ind4),N,N);
     
-    v1dxz = zeros(n*m,1); v2dxz = zeros(n*m,1);
-    v3dxz = zeros(n*m,1); v4dxz = zeros(n*m,1);
+    v1dxz = zeros(N,1); v2dxz = zeros(N,1);
+    v3dxz = zeros(N,1); v4dxz = zeros(N,1);
     
-    v1dyz = zeros(n*m,1); v2dyz = zeros(n*m,1);
-    v3dyz = zeros(n*m,1); v4dyz = zeros(n*m,1);
+    v1dyz = zeros(N,1); v2dyz = zeros(N,1);
+    v3dyz = zeros(N,1); v4dyz = zeros(N,1);
       
     %
     %x
@@ -171,18 +178,18 @@ ss = [(1-xp(ind)).*(1-yp(ind)).*(1-zp(ind));...
 S = sparse(ii,jj,ss);
 St = S';
 
-P = sparse(n*m*s,n*m*s);
+P = sparse(N*s,N*s);
 P(1:size(St,1),1:size(St,2)) = St;
-P = squeeze(P(1:n*m*s,1:n*m*s));
+P = squeeze(P(1:N*s,1:N*s));
 %}
 %S = sparse(ii,jj,ss);
 %St = S';
 %St=sparse(jj,ii,ss);
 
-%P = sparse(n*m*s,n*m*s);
-%P = St(1:n*m*s,1:n*m*s);
-%S = sparse(ii,jj,ss,n*m*s,n*m*s);
-P=sparse(jj,ii,ss,n*m*s,n*m*s);
+%P = sparse(N*s,N*s);
+%P = St(1:N*s,1:N*s);
+%S = sparse(ii,jj,ss,N*s,N*s);
+P=sparse(jj,ii,ss,N*s,N*s);
 if nargout > 1
  
 %% Derivatives
@@ -198,29 +205,29 @@ j1ki1   =  xd(ind) + 1+ (yd(ind)-1)*m + zd(ind)*m*n;
 jk1i1   =  xd(ind) + yd(ind)*m + zd(ind)*m*n;
 j1k1i1  =  xd(ind) + 1 + yd(ind)*m + zd(ind)*m*n;
 
-A1 = sparse(jki,ind,T(ind),n*m*s,n*m*s);
-A2 = sparse(j1ki,ind,T(ind),n*m*s,n*m*s);
-A3 = sparse(jk1i,ind,T(ind),n*m*s,n*m*s);
-A4 = sparse(j1k1i,ind,T(ind),n*m*s,n*m*s);
-A5 = sparse(jki1,ind,T(ind),n*m*s,n*m*s);
-A6 = sparse(j1ki1,ind,T(ind),n*m*s,n*m*s);
-A7 = sparse(jk1i1,ind,T(ind),n*m*s,n*m*s);
-A8 = sparse(j1k1i1,ind,T(ind),n*m*s,n*m*s);
+A1 = sparse(jki,ind,T(ind),N*s,N*s);
+A2 = sparse(j1ki,ind,T(ind),N*s,N*s);
+A3 = sparse(jk1i,ind,T(ind),N*s,N*s);
+A4 = sparse(j1k1i,ind,T(ind),N*s,N*s);
+A5 = sparse(jki1,ind,T(ind),N*s,N*s);
+A6 = sparse(j1ki1,ind,T(ind),N*s,N*s);
+A7 = sparse(jk1i1,ind,T(ind),N*s,N*s);
+A8 = sparse(j1k1i1,ind,T(ind),N*s,N*s);
 
-v1dxz = zeros(n*m*s,1); v2dxz = zeros(n*m*s,1);
-v3dxz = zeros(n*m*s,1); v4dxz = zeros(n*m*s,1);
-v5dxdz = zeros(n*m*s,1); v6dxdz = zeros(n*m*s,1);
-v7dxdz = zeros(n*m*s,1); v8dxdz = zeros(n*m*s,1);
+v1dxz = zeros(N*s,1); v2dxz = zeros(N*s,1);
+v3dxz = zeros(N*s,1); v4dxz = zeros(N*s,1);
+v5dxdz = zeros(N*s,1); v6dxdz = zeros(N*s,1);
+v7dxdz = zeros(N*s,1); v8dxdz = zeros(N*s,1);
 
-v1dyz = zeros(n*m*s,1); v2dyz = zeros(n*m*s,1);
-v3dyz = zeros(n*m*s,1); v4dyz = zeros(n*m*s,1);
-v5dydz = zeros(n*m*s,1); v6dydz = zeros(n*m*s,1);
-v7dydz = zeros(n*m*s,1); v8dydz = zeros(n*m*s,1);
+v1dyz = zeros(N*s,1); v2dyz = zeros(N*s,1);
+v3dyz = zeros(N*s,1); v4dyz = zeros(N*s,1);
+v5dydz = zeros(N*s,1); v6dydz = zeros(N*s,1);
+v7dydz = zeros(N*s,1); v8dydz = zeros(N*s,1);
 
-v1dzz = zeros(n*m*s,1); v2dzz = zeros(n*m*s,1);
-v3dzz = zeros(n*m*s,1); v4dzz = zeros(n*m*s,1);
-v5dzdz = zeros(n*m*s,1); v6dzdz = zeros(n*m*s,1);
-v7dzdz = zeros(n*m*s,1); v8dzdz = zeros(n*m*s,1);
+v1dzz = zeros(N*s,1); v2dzz = zeros(N*s,1);
+v3dzz = zeros(N*s,1); v4dzz = zeros(N*s,1);
+v5dzdz = zeros(N*s,1); v6dzdz = zeros(N*s,1);
+v7dzdz = zeros(N*s,1); v8dzdz = zeros(N*s,1);
 
 v1dxz(ind)  = (-1)*(1-yp(ind)).*(1-zp(ind));
 v2dxz(ind)  = (1-yp(ind)).*(1-zp(ind));
