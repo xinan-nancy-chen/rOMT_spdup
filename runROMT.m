@@ -1,10 +1,4 @@
-function [] = runROMT(cfg)
-
-
-cfg.true_size = round(cfg.size_factor*[length(cfg.x_range),length(cfg.y_range),length(cfg.z_range)]);
-cfg.version = sprintf('diff_%s_tj_%d_dt_%2.1f_nt_%d_ti_%d_tf_%d_uini_0_beta_%5.4f_R_gamma_%4.3f_dtri%d_rsmooth%d_rreinit%d_source%d_dilate%d_pcg%d',...
-            cfg.sig_str,cfg.time_jump,cfg.dt,cfg.nt,cfg.first_time,cfg.last_time,cfg.beta,cfg.gamma,cfg.dTri,cfg.smooth,cfg.reinitR,cfg.add_source,cfg.dilate,cfg.niter_pcg);
-cfg.out_dir = sprintf('./test_results/%s/%s',cfg.tag,cfg.version);
+function [cfg,flag] = runROMT(cfg)
 
 reInitializeU = 1; %1 if reinitialize u to 0 before each time step; 0 if not, unless first time step
 
@@ -17,32 +11,7 @@ if ~exist(sprintf('%s/record.txt',cfg.out_dir),'file')
     csvwrite_with_headers(fname,[0 0 0 0 0 0 0 0 0],{'time-ind','ti','tf','phi','mk','Ru','phiN','max(u)','toc'});
 end
 
-mask = nii2mat(cfg.data_mask_path,cfg.x_range,cfg.y_range,cfg.z_range);
-msk = zeros(size(mask));
-msk(mask>0) = 1;
-
-if cfg.do_resize
-   msk = resizeMatrix(msk,round(cfg.size_factor.*size(msk)),'linear');
-   msk(msk~=1) = 0;
-end
-
-if cfg.dilate>0
-    [xr,yr,zr] = meshgrid(-cfg.dilate:cfg.dilate,-cfg.dilate:cfg.dilate,-cfg.dilate:cfg.dilate);
-    strel = (xr/cfg.dilate).^2 + (yr/cfg.dilate).^2 + (zr/cfg.dilate).^2 <= 1;
-    msk = imdilate(msk,strel);
-end
-
-rho_n = nii2mat(sprintf('%s%02d%s',cfg.data_dir,cfg.first_time,cfg.extension),cfg.x_range,cfg.y_range,cfg.z_range);
-if cfg.do_resize
-   rho_n = resizeMatrix(rho_n,round(cfg.size_factor.*size(rho_n)),'linear');
-end
-if cfg.smooth>0
-    rho_n = affine_diffusion_3d(rho_n,cfg.smooth,0.1,1,1);
-end
-m=min(rho_n(:));
-
-rho_n(~msk) = m;
-rho_n = rho_n(:);
+rho_n = cfg.vol(1).data(:);
 
 if ~exist(sprintf('%s/rho_%s_%d_t_0.mat',cfg.out_dir,cfg.tag,cfg.first_time),'file')
     save(sprintf('%s/rho_%s_%d_t_0.mat',cfg.out_dir,cfg.tag,cfg.first_time),'rho_n');
@@ -68,31 +37,14 @@ for tind = 1:length(cfg.first_time:cfg.time_jump:cfg.last_time)
     end
     %}
     if cfg.reinitR
-        rho_0 = nii2mat(sprintf('%s%02d%s',cfg.data_dir,cfg.first_time+(tind-1)*cfg.time_jump,cfg.extension),cfg.x_range,cfg.y_range,cfg.z_range);
-        if cfg.do_resize
-           rho_0 = resizeMatrix(rho_0,round(cfg.size_factor.*size(rho_0)),'linear');
-        end
-        if cfg.smooth>0
-	    rho_0 = affine_diffusion_3d(rho_0,cfg.smooth,0.1,1,1);
-        end
-        rho_0(~msk) = m;
-        rho_0 = rho_0(:);
+        rho_0 = cfg.vol(tind).data(:);
     else
         rho_0 = rho_n(:);
     end
 
     %true final density
-    rho_N = nii2mat(sprintf('%s%02d%s',cfg.data_dir,cfg.first_time+tind*cfg.time_jump,cfg.extension),cfg.x_range,cfg.y_range,cfg.z_range);
-    if cfg.do_resize
-       rho_N = resizeMatrix(rho_N,round(cfg.size_factor.*size(rho_N)),'linear');
-    end
-    if cfg.smooth>0
-        rho_N = affine_diffusion_3d(rho_N,cfg.smooth,0.1,1,1);
-    end
-    rho_N(~msk) = m;
-    
     par = paramInitFunc(cfg.true_size',cfg.nt,cfg.dt,cfg.sigma,cfg.add_source,cfg.gamma,cfg.beta,cfg.niter_pcg,cfg.dTri);
-    par.drhoN     = rho_N(:);
+    par.drhoN     = cfg.vol(tind+1).data(:);
     
     % initial guess for u:
     if tind == 1 || reInitializeU
@@ -125,4 +77,5 @@ fprintf('\n Elapsed Time: %s\n',datestr(seconds(T),'HH:MM:SS'))
 profile viewer
 profile off
 
+flag = 1;
 end

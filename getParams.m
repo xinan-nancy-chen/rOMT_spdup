@@ -12,10 +12,65 @@ function [path_par,data_par,model_par] = getParams(data_name)
 if nargin<1
     data_name='C294';
 end
-path_par.out_dir_pre = '../rOMT_spdup';
+path_par.out_dir_pre = '../rOMT2D';
 
 switch data_name
     %% 2D
+    case 'MCA_S1' % 2D
+        path_par.data_tag = 'MCA_S1';
+        path_par.data_dir = './data/MCA/MCA_S001/';
+        path_par.data_name = 'C2-registered 021521_MCA-in-vivo_05.lif - Series001_';
+        path_par.extension = '.jpg';
+        
+        data_par.dataset_name = 'MCA021521';
+
+        
+        data_par.domain_size = [2106,2118];
+        
+        data_par.x_range = 1:1600;
+        data_par.y_range = 1:1800;
+        
+        data_par.n1=length(data_par.x_range);
+        data_par.n2=length(data_par.y_range);
+        
+        data_par.do_time_interp = 0;
+        
+        switch data_par.do_time_interp
+            case 1
+                tinterp_str = 'gauss';
+            case 0
+                tinterp_str = 'none';
+        end
+        data_par.do_resize = 1;
+        data_par.size_factor = 0.15;
+       
+        data_par.true_size=round(data_par.size_factor*[length(data_par.x_range),length(data_par.y_range)]);
+        
+        data_par.up_thresh = 3000;
+        data_par.redistribute = 0;
+        data_par.normalize = 0;
+        data_par.smooth = 0;%1;
+        data_par.reinitR = 1;%0; %0 if do consecutively and 1 if reinitialize rho
+        data_par.dilate = 0;%3;
+        
+        data_par.first_time = 18;%50;
+        data_par.time_jump = 8;%16;
+        data_par.last_time = 106;%82;%98;
+        
+        model_par.sigma = 2e-1;
+        model_par.sig_str = '2e1';
+        model_par.dt = 0.4;
+        model_par.nt = 10;
+        model_par.gamma = 0.008;%0.8;%0.008;
+        model_par.beta  = 0.0001;%0.0000001;%0.1;%0.0001;
+        model_par.niter_pcg = 40;%60;%40;%20;
+        
+        model_par.dTri = 3;%1 := 'closed', 3:= 'open'
+        model_par.add_source = 0;
+        path_par.version = sprintf('diff_%s_tj_%d_dt_%2.1f_nt_%d_ti_%d_tf_%d_uini_0_rini_%s_beta_%5.4f_R_gamma_%4.3f_correctHu_dtri%d_tinterp%d_rmin%d_rnorm%d_rsmooth%d_rreinit%d_source%d_dilate%d_pcg%d',...
+            model_par.sig_str,data_par.time_jump,model_par.dt,model_par.nt,data_par.first_time,data_par.last_time,tinterp_str,model_par.beta,model_par.gamma,model_par.dTri,data_par.do_time_interp,data_par.redistribute,data_par.normalize,data_par.smooth,data_par.reinitR,model_par.add_source,data_par.dilate,model_par.niter_pcg);
+        path_par.out_dir=sprintf('%s/MCA/%s/%s',path_par.out_dir_pre,path_par.data_tag,path_par.version);
+    %%
     case 'gaussian3' % 2D
         path_par.data_tag = 'gaussian3';
         path_par.data_dir = './data/gaussian2D/gaussian3/';
@@ -182,7 +237,7 @@ switch data_name
         path_par.out_dir=sprintf('%s/gaussian2D/%s/%s',path_par.out_dir_pre,path_par.data_tag,path_par.version);
 
     %% 3D
-    %{
+    
     %DOWNSAMPLED VERSION
     case 'C294'%%WT
         path_par.data_tag = 'C294';
@@ -208,7 +263,7 @@ switch data_name
                 data_par.z_range = 39:85;%41:83;
         end
         
-        data_par.domain_size = [100,106,100];
+        data_par.domain_size = [100,106,100];%
         
         data_par.n1=length(data_par.x_range);
         data_par.n2=length(data_par.y_range);
