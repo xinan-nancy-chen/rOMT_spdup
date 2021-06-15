@@ -15,6 +15,8 @@ The results of Lagrangian Speed Map (without QuickBundle) and Velocity Flux Vect
 
 The previous version takes the output of current loop as the input of the next loop, and here we call it the *dependent* version. However, we have developed a method to run each loop *independently*, thus makes parallelization realistic. <br />
 
+Next we show an example of a healthy rat brain data tagged as 'C294'. <br />
+
 For the independent (new) version (cfg.reinitR = 1), <br />
 
 <p float="left">
@@ -40,5 +42,40 @@ For the dependent (previous) version (cfg.reinitR = 0), <br />
   <img src="test_results/C294/diff_2e3_tj_2_dt_0.4_nt_10_ti_31_tf_51_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth1_rreinit0_source0_dilate3_pcg60/LPPA_set001_051721/Vectors/C294_LagAdvDiffVector_E31_53.png" width="470" /> 
 </p>
 
-Even though the dependent version gives smoother pathlines and higher intensity of activities, but by comparing the results with the input brain images, the independent version actually fits the data best. <br />
+Even though the dependent version gives smoother pathlines and higher intensity of activities, but by comparing the results with the input brain images (12 frames shown as follows), the independent version actually fits the data best in terms of the spatial distribution of activities. <br />
+
+<p float="left">
+  <img src="test_results/C294/C294_InputData_E31_53_t_1.png" width="190" />
+  <img src="test_results/C294/C294_InputData_E31_53_t_2.png" width="190" /> 
+  <img src="test_results/C294/C294_InputData_E31_53_t_3.png" width="190" />
+  <img src="test_results/C294/C294_InputData_E31_53_t_4.png" width="190" /> 
+  <img src="test_results/C294/C294_InputData_E31_53_t_5.png" width="190" />
+  <img src="test_results/C294/C294_InputData_E31_53_t_6.png" width="190" /> 
+  <img src="test_results/C294/C294_InputData_E31_53_t_7.png" width="190" />
+  <img src="test_results/C294/C294_InputData_E31_53_t_8.png" width="190" /> 
+  <img src="test_results/C294/C294_InputData_E31_53_t_9.png" width="190" />
+  <img src="test_results/C294/C294_InputData_E31_53_t_10.png" width="190" /> 
+  <img src="test_results/C294/C294_InputData_E31_53_t_11.png" width="190" />
+  <img src="test_results/C294/C294_InputData_E31_53_t_12.png" width="190" /> 
+</p>
+
+This comparison illustrates the viability of upgrading the dependent into an indenpendent algorithm. <br />
+
+## We add the smoothing of velocity fields in post-processing trying to reduce the noise
+
+Having identified that the indenpendent version gives noisier and less smooth results which is within expectation by introducing new noise in each loop, we add a  smoothing step to the velocity fields during post-processing. <br />
+
+Since our algorithm is dynamic, the smoothing can be divided into two categories: <br />
+
+smoothing the velocity field in the <br />
+(1) time space (whos intensity is controlled by paramter Svt) <br />
+(2) spatial space (controlled by paramter Svs) <br />
+
+According to testing, tuning on Svs is way more sensitive than on Svt. <br />
+
+Here we present two example rat brain cases, one healthy 'C294' and one with CAA (Cerebral Amyloid Angiopathy) 'C371' to show the effect of smoothing. <br />
+
+
+
+
 
