@@ -3,10 +3,10 @@ This repository contains the modified version of the rOMT algorithm part in rOMT
 We speed up the original algorithm and include the version of handling 2D data. <br />
 Go to Inverse -> GNblock_u.m for editing history<br />
 
-For more info about the theory and details about the project, please go to https://github.com/xinan-nancy-chen/rOMT
+For more info about the theory and details about the project, please go to https://github.com/xinan-nancy-chen/rOMT.
 
 # Sample cases for demonstration
-Run ``driver_CAA.m`` which contains a sample data case with default paramters. This is a healthy rat brain DCE-MRI data. It takes about 2 hours and 45 minutes to run on a local computer with i7 and 16G memory while the original version before improvement took about 24 hours.<br />
+Run ``driver_CAA.m`` which contains a sample data case with default paramters. This is a healthy rat brain DCE-MRI data. It takes about 2 hours and 45 minutes to run locally with 2.6 GHz Intel Core i7 and 16G memory on MacOS, while the original version before improvement (https://github.com/xinan-nancy-chen/rOMT) took about 37 hours on a CPU cluster with 40 cores.<br />
 
 The results of Lagrangian Speed Map (without QuickBundle) and Velocity Flux Vectors will pop up automatically, both ran and visualized in Matlab_R2019b.<br />
 
