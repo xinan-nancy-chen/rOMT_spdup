@@ -153,6 +153,7 @@ set(gca,'Color',[0.85,0.85,0.93]), set(gcf,'unit','normalized','position',[0.1,1
 
 saveas(gcf, sprintf('%s/%s/%s_LagFluxVector_E%02d_%02d.png',cfg.out_dir,cfg.outdir_v,cfg.tag,cfg.first_time,cfg.last_time+cfg.time_jump)); 
 
+%{
 %% Visualization of advective & diffusive vectors
 [InDadv,~,~] = intersect(PATH.ADVind,PATH.ind_brain);
 [InDdiff,~,~] = intersect(PATH.DIFFind,PATH.ind_brain);
@@ -182,6 +183,7 @@ view([-188.3500   13.7463]); legend('Location','best','Fontsize',12);
 set(gca,'Color',[0.85,0.85,0.93]), set(gcf,'unit','normalized','position',[0.1,1,0.4,0.5],'Color',[0.85,0.85,0.93]), set(gcf, 'InvertHardcopy', 'off')
 
 saveas(gcf, sprintf('%s/%s/%s_LagAdvDiffVector_E%02d_%02d.png',cfg.out_dir,cfg.outdir_v,cfg.tag,cfg.first_time,cfg.last_time+cfg.time_jump)); 
+%}
 %% Visualization of pathlines
 figure,
 SL2 = SL(PATH.ind_brain);
