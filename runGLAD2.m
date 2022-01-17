@@ -462,6 +462,7 @@ vtkwrite(sprintf('%s/%s/%s_disp_lentol_%.2f_%s.vtk',cfg.out_dir,outdir,tag,glacf
 vtkwrite(sprintf('%s/%s/%s_anato_%s.vtk',cfg.out_dir,outdir,tag,outversion), 'structured_points', 'mask', anato);
 
 %% NCA
+%{
 [xx, yy, zz] = meshgrid(1:n(2),1:n(1),1:n(3));
 
 startpind = sub2ind(n,round(PATH.startp(:,1)),round(PATH.startp(:,2)),round(PATH.startp(:,3)));
@@ -556,7 +557,7 @@ vtkwrite(sprintf('%s/%s/%s_ADVdisp_%s.vtk',cfg.out_dir,outdir,tag,outversion), '
 
 vtkwrite(sprintf('%s/%s/%s_DIFFdisp_%s.vtk',cfg.out_dir,outdir,tag,outversion), 'structured_grid', PATH.startp(InDdiff,1), PATH.startp(InDdiff,2), PATH.startp(InDdiff,3), ... 
     'vectors', 'vector_field', PATH.disp(InDdiff,1), PATH.disp(InDdiff,2), PATH.disp(InDdiff,3));
-
+%}
 fprintf('Flux vectors in vtk format saved in %s/%s\n\n',cfg.out_dir,outdir)
 
 
