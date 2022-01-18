@@ -1,52 +1,18 @@
 # rOMT_spdup
-This repository contains the modified version of the rOMT algorithm part in rOMT repository (https://github.com/xinan-nancy-chen/rOMT). We <br />
+This repository contains the modified version of algorithm in rOMT repository (https://github.com/xinan-nancy-chen/rOMT). We <br />
 (1) Upgraded the previous code and realized 91% percent runtime reduction; <br />
 (2) Offered the option to run multiple rOMT loops in parallel to further cut down on the runtime; <br />
 (3) Offered the option to smoothen pathlines for the parallelized version in post-processing; <br />
-(4) Included the version of handling 2D data in rOMT code, in addition to 3D data.
+(4) Included the version of handling <em>2D</em> data in rOMT code, in addition to <em>3D</em> data.
 
 Go to Inverse -> GNblock_u.m for editing history<br />
 
-For more info about the theory and details about the project, please go to https://github.com/xinan-nancy-chen/rOMT/README.md.
+For more info about the theory and details about the project, please go to https://github.com/xinan-nancy-chen/rOMT.
 
 # Sample cases for demonstration
-Run ``driver_CAA.m`` which contains a sample data case with default paramters. This is a healthy rat brain DCE-MRI data. It takes about 2 hours and 45 minutes to run locally with 2.6 GHz Intel Core i7 and 16G memory on MacOS, while the original version before improvement took about 37 hours on a CPU cluster with 40 cores.<br />
+Run ``driver_CAA.m`` which contains a sample data case with default paramters. This is DCE-MRI data from a healthy rat brain. It took about 2 hours and 45 minutes to run unparalleled locally with 2.6 GHz Intel Core i7 and 16G memory on MacOS, while the original version before improvement took about 37 hours on a CPU cluster with 40 cores. If run in paralled, it took about 24 minutes on the cluster with the same configuration. <br />
 
-The results of Lagrangian Speed Map (without QuickBundle) and Velocity Flux Vectors will pop up automatically, both ran and visualized in Matlab_R2019b.<br />
-
-
-## (1) We compare this new version with the previous version
-
-The previous version takes the output of current loop as the input of the next loop, and here we call it the *dependent* version. However, we have developed a method to run each loop *independently*, thus makes parallelization realistic. <br />
-
-Next we show an example of a healthy rat brain data tagged as 'C294'. <br />
-
-For the independent (new) version (cfg.reinitR = 1), <br />
-
-<p float="left">
-  <img src="test_results/C294/diff_2e3_tj_2_dt_0.4_nt_10_ti_31_tf_51_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth1_rreinit1_source0_dilate3_pcg60/LPPA_set001_051721/Speed/C294_LagSpeed_E31_53.png" width="470" />
-  <img src="test_results/C294/diff_2e3_tj_2_dt_0.4_nt_10_ti_31_tf_51_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth1_rreinit1_source0_dilate3_pcg60/LPPA_set001_051721/Vectors/C294_LagPathlines_E31_53.png" width="470" /> 
-</p>
-
-<p float="left">
-  <img src="test_results/C294/diff_2e3_tj_2_dt_0.4_nt_10_ti_31_tf_51_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth1_rreinit1_source0_dilate3_pcg60/LPPA_set001_051721/Vectors/C294_LagFluxVector_E31_53.png" width="470" />
-  <img src="test_results/C294/diff_2e3_tj_2_dt_0.4_nt_10_ti_31_tf_51_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth1_rreinit1_source0_dilate3_pcg60/LPPA_set001_051721/Vectors/C294_LagAdvDiffVector_E31_53.png" width="470" /> 
-</p>
-
-Top-left: Lagrangian speed map; Top-right: Lagrangian pathlines; Bottom-left: Velocity flux vectors; Bottom-right: Classification of flux vectors into advection and diffusion.<br />
-
-For the dependent (previous) version (cfg.reinitR = 0), <br />
-<p float="left">
-  <img src="test_results/C294/diff_2e3_tj_2_dt_0.4_nt_10_ti_31_tf_51_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth1_rreinit0_source0_dilate3_pcg60/LPPA_set001_051721/Speed/C294_LagSpeed_E31_53.png" width="470" />
-  <img src="test_results/C294/diff_2e3_tj_2_dt_0.4_nt_10_ti_31_tf_51_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth1_rreinit0_source0_dilate3_pcg60/LPPA_set001_051721/Vectors/C294_LagPathlines_E31_53.png" width="470" /> 
-</p>
-
-<p float="left">
-  <img src="test_results/C294/diff_2e3_tj_2_dt_0.4_nt_10_ti_31_tf_51_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth1_rreinit0_source0_dilate3_pcg60/LPPA_set001_051721/Vectors/C294_LagFluxVector_E31_53.png" width="470" />
-  <img src="test_results/C294/diff_2e3_tj_2_dt_0.4_nt_10_ti_31_tf_51_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth1_rreinit0_source0_dilate3_pcg60/LPPA_set001_051721/Vectors/C294_LagAdvDiffVector_E31_53.png" width="470" /> 
-</p>
-
-Even though the dependent version gives smoother pathlines and higher intensity of activities, but by comparing the results with the input brain images (12 frames shown as follows), the independent version actually fits the data best in terms of the spatial distribution of activities. <br />
+The inputs are 12 successive <em>3D</em> images within a masked region (shown as follows). <br />
 
 <p float="left">
   <img src="test_results/C294/C294_InputData_E31_53_t_1.png" width="190" />
@@ -62,6 +28,32 @@ Even though the dependent version gives smoother pathlines and higher intensity 
   <img src="test_results/C294/C294_InputData_E31_53_t_11.png" width="190" />
   <img src="test_results/C294/C294_InputData_E31_53_t_12.png" width="190" /> 
 </p>
+
+The results: Lagrangian <em>Speed Map</em> (without QuickBundle), <em>Pathlines</em> and <em>Velocity Flux Vectors</em>, will pop up automatically, all ran and visualized with Matlab_R2019b.<br />
+
+Note that if run unparalleled, we put the final interpolated image from the previous loop into the next loop as the initial image. If run in parallel, we use the original input images as initial images in each loop. In ``driver_CAA.m``, by setting cfg.reinitR = 0, it will give the unparallel version, and 1 for the parallel version. The latter will give 10-fold faster results, which may however result in unsmooth pathlines.
+
+## (1) We compare unparallel and parallel results
+
+Next we show an example of a healthy rat brain data tagged as 'C294', comparing the Lagrangian results of unparalleled and parallel code. <br />
+
+For the unparallel version (cfg.reinitR = 0), <br />
+<p float="left">
+  <img src="test_results/C294/diff_2e3_tj_2_dt_0.4_nt_10_ti_31_tf_51_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth1_rreinit0_source0_dilate3_pcg60/LPPA_set001_051721/Speed/C294_LagSpeed_E31_53.png" width="310" />
+  <img src="test_results/C294/diff_2e3_tj_2_dt_0.4_nt_10_ti_31_tf_51_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth1_rreinit0_source0_dilate3_pcg60/LPPA_set001_051721/Vectors/C294_LagPathlines_E31_53.png" width="310" /> 
+  <img src="test_results/C294/diff_2e3_tj_2_dt_0.4_nt_10_ti_31_tf_51_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth1_rreinit0_source0_dilate3_pcg60/LPPA_set001_051721/Vectors/C294_LagFluxVector_E31_53.png" width="310" />
+</p>
+
+For the parallel version (cfg.reinitR = 1), <br />
+
+<p float="left">
+  <img src="test_results/C294/diff_2e3_tj_2_dt_0.4_nt_10_ti_31_tf_51_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth1_rreinit1_source0_dilate3_pcg60/LPPA_set001_051721/Speed/C294_LagSpeed_E31_53.png" width="310" />
+  <img src="test_results/C294/diff_2e3_tj_2_dt_0.4_nt_10_ti_31_tf_51_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth1_rreinit1_source0_dilate3_pcg60/LPPA_set001_051721/Vectors/C294_LagPathlines_E31_53.png" width="310" /> 
+  <img src="test_results/C294/diff_2e3_tj_2_dt_0.4_nt_10_ti_31_tf_51_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth1_rreinit1_source0_dilate3_pcg60/LPPA_set001_051721/Vectors/C294_LagFluxVector_E31_53.png" width="310" />
+</p>
+
+Top-left: Lagrangian speed map; Top-right: Lagrangian pathlines; Bottom-left: Velocity flux vectors; Bottom-right: Classification of flux vectors into advection and diffusion.<br />
+
 
 This comparison illustrates the viability of upgrading the dependent into an indenpendent algorithm. <br />
 
