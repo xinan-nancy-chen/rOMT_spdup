@@ -89,7 +89,6 @@ cfg.out_dir                 = sprintf('./test_results/%s/%s',cfg.tag,cfg.version
 
 %% Run post-processing
 
-%[s, SL, PATH] = runGLAD(cfg);
 [cfg, s, SL, PATH] = runGLAD2(cfg);
 
 
