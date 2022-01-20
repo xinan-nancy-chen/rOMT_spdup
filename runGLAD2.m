@@ -11,7 +11,7 @@ formatOut = 'mmddyy';
 date_str = datestr(now,formatOut);
 
 % get GLAD parameters
-glacfg = paramInitGLADpar2(cfg);
+glacfg = paramInitGLADpar(cfg);
 
 % set usefule variables:
 nt = cfg.nt;
