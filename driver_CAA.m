@@ -89,9 +89,8 @@ cfg.out_dir                 = sprintf('./test_results/%s/%s',cfg.tag,cfg.version
 
 %% Run post-processing
 
+%[cfg, map, SL, stream, PATH] = runGLAD(cfg);
 [cfg, s, SL, PATH] = runGLAD2(cfg);
-
-
 
 
 %% Visualization of speed map
