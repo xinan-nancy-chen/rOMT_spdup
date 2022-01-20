@@ -1,4 +1,4 @@
-function glacfg = paramInitGLADpar2(cfg)
+function glacfg = paramInitGLADpar(cfg)
 % Created by Xinan Chen on 04/26/2021.
 % This function returns parameters corresponding to the input 'data_name'
 %%
