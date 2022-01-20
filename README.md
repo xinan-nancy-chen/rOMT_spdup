@@ -14,17 +14,29 @@ For more info about the theory and details about the project, please go to https
 ## (A) Gaussian Spheres
 Run ``driver_gauss.m`` which contains a synthetic geometric dataset with default paramters. It took about 26 minutes on a 2.6 GHz Intel Core i7-9750H, 16G RAM, running macOS Mojave (version 10.14.6) with MATLAB 2019b.<br />
 
-The inputs are 5 successive <em>3D</em> Gaussian Spheres (shown as follows). <br />
+The inputs are 5 successive <em>3D</em> Gaussian Spheres (shown as follows, colormap='jet'). <br />
 
 <p float="left">
-  <img src="test_results/gauss2/diff_2e3_tj_1_dt_0.4_nt_10_ti_1_tf_4_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth0_rreinit1_source0_pcg60/gauss2_data_E01.png" width="190" />
-  <img src="test_results/gauss2/diff_2e3_tj_1_dt_0.4_nt_10_ti_1_tf_4_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth0_rreinit1_source0_pcg60/gauss2_data_E02.png" width="190" />
-  <img src="test_results/gauss2/diff_2e3_tj_1_dt_0.4_nt_10_ti_1_tf_4_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth0_rreinit1_source0_pcg60/gauss2_data_E03.png" width="190" />
-  <img src="test_results/gauss2/diff_2e3_tj_1_dt_0.4_nt_10_ti_1_tf_4_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth0_rreinit1_source0_pcg60/gauss2_data_E04.png" width="190" />
-  <img src="test_results/gauss2/diff_2e3_tj_1_dt_0.4_nt_10_ti_1_tf_4_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth0_rreinit1_source0_pcg60/gauss2_data_E05.png" width="190" />
+  <img src="test_results/gauss2/diff_2e3_tj_1_dt_0.4_nt_10_ti_1_tf_4_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth0_rreinit1_source0_pcg60/LPPA_set001_103021/gauss2_data_E01.png" width="190" />
+  <img src="test_results/gauss2/diff_2e3_tj_1_dt_0.4_nt_10_ti_1_tf_4_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth0_rreinit1_source0_pcg60/LPPA_set001_103021/gauss2_data_E02.png" width="190" />
+  <img src="test_results/gauss2/diff_2e3_tj_1_dt_0.4_nt_10_ti_1_tf_4_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth0_rreinit1_source0_pcg60/LPPA_set001_103021/gauss2_data_E03.png" width="190" />
+  <img src="test_results/gauss2/diff_2e3_tj_1_dt_0.4_nt_10_ti_1_tf_4_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth0_rreinit1_source0_pcg60/LPPA_set001_103021/gauss2_data_E04.png" width="190" />
+  <img src="test_results/gauss2/diff_2e3_tj_1_dt_0.4_nt_10_ti_1_tf_4_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth0_rreinit1_source0_pcg60/LPPA_set001_103021/gauss2_data_E05.png" width="190" />
 </p>
 
-The Lagrangian results: <em>Speed Map</em> (without QuickBundle), <em>Pe Map</em> , <em>Pathlines</em>, <em>Speed-lines</em>, <em>Péclet-lines</em> and <em>Velocity Flux Vectors</em>, will pop up automatically all ran and visualized with Matlab_R2019b.<br />
+The Lagrangian results: <em>Speed Map</em> (without QuickBundle), <em>Pe Map</em> , <em>Pathlines</em>, <em>Speed-lines</em>, <em>Péclet-lines</em> and <em>Velocity Flux Vectors</em>, will pop up automatically.<br />
+<p float="left">
+  <img src="test_results/gauss2/diff_2e3_tj_1_dt_0.4_nt_10_ti_1_tf_4_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth0_rreinit1_source0_pcg60/LPPA_set001_103021/Pathlines/gauss2_LagPathlines_E01_05.png" width="300" />
+  <img src="test_results/gauss2/diff_2e3_tj_1_dt_0.4_nt_10_ti_1_tf_4_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth0_rreinit1_source0_pcg60/LPPA_set001_103021/Pathlines/gauss2_LagSpdlines_E01_05.png" width="300" />
+  <img src="test_results/gauss2/diff_2e3_tj_1_dt_0.4_nt_10_ti_1_tf_4_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth0_rreinit1_source0_pcg60/LPPA_set001_103021/Pathlines/gauss2_LagPelines_E01_05.png" width="300" />
+</p>
+<em>Lagrangian Results. Left: Pathlines; Middle: Speed-lines; Right: Péclet-lines</em>.<br /><br />
+<p float="left">
+  <img src="test_results/gauss2/diff_2e3_tj_1_dt_0.4_nt_10_ti_1_tf_4_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth0_rreinit1_source0_pcg60/LPPA_set001_103021/Pathlines/gauss2_LagFluxVector_E01_05.png" width="300" />
+  <img src="test_results/gauss2/diff_2e3_tj_1_dt_0.4_nt_10_ti_1_tf_4_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth0_rreinit1_source0_pcg60/LPPA_set001_103021/Speed/gauss2_LagSpeed_E01_05.png" width="300" />
+  <img src="test_results/gauss2/diff_2e3_tj_1_dt_0.4_nt_10_ti_1_tf_4_uini_0_beta_0.0001_R_gamma_0.008_dtri1_rsmooth0_rreinit1_source0_pcg60/LPPA_set001_103021/Speed/gauss2_LagPe_E01_05.png" width="300" />
+</p>
+<em>Lagrangian Results. Left: Velocity flux vectors; Middle: Speed map; Right: Pe map</em>.<br />
 
 ## (B) Rat Brain MRI
 Run ``driver_CAA.m`` which contains a sample data case with default paramters. This is DCE-MRI data from a healthy rat brain. It took about 2 hours and 45 minutes to run unparalleled locally with 2.6 GHz Intel Core i7 and 16G RAM on MacOS, while the original version before improvement took about 37 hours on a CPU cluster with 40 cores. If run in paralled, it took about 24 minutes on the cluster with the same configuration. <br />
