@@ -10,7 +10,12 @@ Go to Inverse -> GNblock_u.m for editing history<br />
 For more info about the theory and details about the project, please go to https://github.com/xinan-nancy-chen/rOMT.
 
 # Sample cases for demonstration
-Run ``driver_CAA.m`` which contains a sample data case with default paramters. This is DCE-MRI data from a healthy rat brain. It took about 2 hours and 45 minutes to run unparalleled locally with 2.6 GHz Intel Core i7 and 16G memory on MacOS, while the original version before improvement took about 37 hours on a CPU cluster with 40 cores. If run in paralled, it took about 24 minutes on the cluster with the same configuration. <br />
+
+## (A) Gaussian Spheres
+Run ``driver_gauss.m`` which contains a synthetic geometric dataset of five successive input images with default paramters. It took about 26 minutes on a 2.6 GHz Intel Core i7-9750H, 16G RAM, running macOS Mojave (version 10.14.6) with MATLAB 2019b. The Lagrangian results: <em>Speed Map</em> (without QuickBundle), <em>Pe Map</em> , <em>Pathlines</em>, <em>Speed-lines</em>, <em>Péclet-lines</em> and <em>Velocity Flux Vectors</em>, will pop up automatically all ran and visualized with Matlab_R2019b.<br />
+
+## (B) Rat Brain MRI
+Run ``driver_CAA.m`` which contains a sample data case with default paramters. This is DCE-MRI data from a healthy rat brain. It took about 2 hours and 45 minutes to run unparalleled locally with 2.6 GHz Intel Core i7 and 16G RAM on MacOS, while the original version before improvement took about 37 hours on a CPU cluster with 40 cores. If run in paralled, it took about 24 minutes on the cluster with the same configuration. <br />
 
 The inputs are 12 successive <em>3D</em> images within a masked region (shown as follows). <br />
 
@@ -33,7 +38,7 @@ The Lagrangian results: <em>Speed Map</em> (without QuickBundle), <em>Pathlines<
 
 Note that if run unparalleled, we put the final interpolated image from the previous loop into the next loop as the initial image. If run in parallel, we use the original input images as initial images in each loop. In ``driver_CAA.m``, by setting cfg.reinitR = 0, it will give the unparallel version, and 1 for the parallel version. The latter will give 10-fold faster results, which may however result in unsmooth pathlines.
 
-## (1) We compare unparallel and parallel results
+### (1) We compare unparallel and parallel results
 
 Next we show an example of a healthy rat brain data tagged as 'C294', comparing the Lagrangian results of unparalleled and parallel code. <br />
 
@@ -59,7 +64,7 @@ Next we show an example of a healthy rat brain data tagged as 'C294', comparing 
 
 As the above figures exhbit, both algorithms give the approximately same distributions of speed maps and the overall same directions of flows, while the unparallel version gives smoother pathlines that penetrate deeper.  This comparison illustrates the viability of upgrading the unparallel into parallel algorithm if short runtime is emphasized. <br />
 
-## We add the smoothening of velocity fields in post-processing
+### We add the smoothening of velocity fields in post-processing
 
 Having identified that the parallel version gives noisier and less smooth results which is within expectation by constantly introducing new noise in each loop, we therefore offer an option of adding a smoothing step to the velocity fields during post-processing. <br />
 
