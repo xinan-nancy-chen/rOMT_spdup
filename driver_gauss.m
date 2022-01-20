@@ -93,7 +93,8 @@ cfg.out_dir                 = sprintf('./test_results/%s/%s',cfg.tag,cfg.version
 
 %% Run rOMT
 if cfg.reinitR
-    [cfg, flag] = runROMT_par(cfg);
+    %[cfg, flag] = runROMT_par(cfg);
+    [cfg, flag] = runROMT(cfg);
 else
     [cfg, flag] = runROMT(cfg);
 end
