@@ -9,6 +9,8 @@ Go to Inverse -> GNblock_u.m for editing history<br />
 
 For more info about the theory and details about the project, please go to https://github.com/xinan-nancy-chen/rOMT.
 
+Contact Xinan Chen at chenx7@mskcc.org for questions.
+
 # Sample cases for demonstration
 
 ## (A) Gaussian Spheres
