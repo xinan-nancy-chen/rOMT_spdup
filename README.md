@@ -1,4 +1,16 @@
-# rOMT_spdup
+# Introduction of rOMT_spdup
+
+The regularized optimal mass transport (rOMT) problem can be described as follows. Given the initial mass distribution function $\rho_0(x)\geqslant0$ and the final one $\rho_1(x)\geqslant0$ defined on a bounded region $\Omega\subseteq\mathbb{R}^3$, one solves
+
+$$\underset{\rho,v}{\text{min}}\quad \int_0^T\int_{\Omega}\left\lVert v(t,x)\right\rVert^2\rho(t,x)dx dt $$
+subject to
+
+$$\frac{\partial\rho}{\partial t} + \nabla\cdot(\rho v) = \sigma\Delta\rho, $$
+
+$$\rho(0,x) = \rho_0(x), \quad\rho(T,x) = \rho_1(x)$$
+
+where a temporal dimension $t\in[0,T]$ is added to the transport process. In the above expression, $\rho(t,x)$ is the dynamic density function; $v(t,x)$ is the velocity field defining the flow from $\rho_0$ to $\rho_1$; constant $\sigma>0$ is the diffusion coefficient.
+
 This repository contains the modified version of algorithm in rOMT repository (https://github.com/xinan-nancy-chen/rOMT). We <br />
 (1) Upgraded the previous code and realized 91% percent runtime reduction; <br />
 (2) Offered the option to run multiple rOMT loops in parallel to further cut down on the runtime; <br />
