@@ -19,7 +19,11 @@ This repository contains the modified version of algorithm in rOMT repository (h
 
 Go to Inverse -> GNblock_u.m for editing history<br />
 
-For more info about the theory and details about the project, please go to https://github.com/xinan-nancy-chen/rOMT.
+For more info about the theory and details about the project, please go to https://github.com/xinan-nancy-chen/rOMT or
+
+> -- <cite>[Visualizing fluid flows via regularized optimal mass transport with applications to neuroscience][1]</cite>,
+
+[1]: https://arxiv.org/abs/2201.07307
 
 Contact Xinan Chen at chenx7@mskcc.org for questions.
 
