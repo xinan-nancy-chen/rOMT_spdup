@@ -92,12 +92,13 @@ cfg.version                 = sprintf('diff_%s_tj_%d_dt_%2.1f_nt_%d_ti_%d_tf_%d_
 cfg.out_dir                 = sprintf('./test_results/%s/%s',cfg.tag,cfg.version);
 
 %% Run rOMT
-if cfg.reinitR
-    %[cfg, flag] = runROMT_par(cfg);
-    [cfg, flag] = runROMT(cfg);
-else
-    [cfg, flag] = runROMT(cfg);
-end
+[cfg, flag] = runROMT(cfg);
+%if cfg.reinitR
+%    %[cfg, flag] = runROMT_par(cfg);
+%    [cfg, flag] = runROMT(cfg);
+%else
+%    [cfg, flag] = runROMT(cfg);
+%end
 
 %% Run post-processing
 
