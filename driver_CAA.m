@@ -13,7 +13,7 @@ cfg.dataset_name            = 'CAA';  % name of dataset
 cfg.data_dir                = './data/12_MONTH_DATA/psnrv/WT/C294/C294_031318A/psnrv_C294_031318A_DOTA37_30ul_E'; % data dir
 cfg.extension               = '.nii'; % format of data
 cfg.do_ROI_msk              = 1;
-cfg.ROI_msk_path            = '../../data/12_MONTH_DATA/masksforOMT/WT/C294_MASK.nii';
+cfg.ROI_msk_path            = '.data/12_MONTH_DATA/masksforOMT/WT/C294_MASK.nii';
 cfg.x_range                 = 20:80;
 cfg.y_range                 = 1:106;
 cfg.z_range                 = 39:85;
@@ -22,7 +22,7 @@ cfg.z_range                 = 39:85;
 %cfg.max_dpsnrv              = './data/12_MONTH_DATA/MAXpsnrv/C294_031318A_psnrv_max.nii'; %
 cfg.anato                   = './data/12_MONTH_DATA/psnrv/WT/C294/pbase_snrv_C294_031318A_DOTA37_30ul_E53.nii'; %
 cfg.sp_mask_opts(1).name    = 'brain';
-cfg.sp_mask_opts(1).path    = '../../data/12_MONTH_DATA/12months_mask_brainCSF/C294.nii';
+cfg.sp_mask_opts(1).path    = './data/12_MONTH_DATA/12months_mask_brainCSF/C294.nii';
 
 % set rOMT parameters
 cfg.do_resize               = 0;%1;
